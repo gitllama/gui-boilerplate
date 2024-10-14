@@ -1,0 +1,21 @@
+<html>
+  <body>
+    <h1>Hello, World!</h1>
+    <button type="button" onclick="onClickFunc1()">click_1</button>
+    <button type="button" onclick="onClickFunc2()">click_2</button>
+  </body>
+  <script>
+    const obj = {}
+    const onClickFunc1 = () =>{
+      const dst = { type : "test", payload : "hoge" }
+      window.ipc.postMessage(JSON.stringify(dst))
+    };
+    const onClickFunc2 = () =>{
+      const dst = { type : "test-2", payload : "hoge" }
+      window.ipc.postMessage(JSON.stringify(dst))
+    };
+    // obj.addEventListener('test', (e) => {
+    //   console.log(e);
+    // }, false);
+  </script>
+</html>

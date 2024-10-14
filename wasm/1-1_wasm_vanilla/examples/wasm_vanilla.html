@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+<body>
+  <div>Wasm Test</div>
+  <script type="module">
+
+    const module = await WebAssembly.compileStreaming(fetch('../target/wasm32-unknown-unknown/release/wasm_vanilla.wasm'));
+    const importObject = {
+      env: {
+        hello: () => { console.log("hello world") },
+        add_one: (src) => { return src + 1; },
+        date_now: Date.now,
+        // console_log: (ptr, len) => {
+        //   const chars = new Uint16Array(instance_2.exports.memory.buffer, ptr, len);
+        //   console.log(String.fromCharCode(...chars));
+        // },
+      }
+    };
+
+    console.log(module);
+    const instance = await WebAssembly.instantiate(module, importObject);
+
+    /*
+      const { add, run } = instance.exports;
+    */
+    instance.exports.run();
+    console.log(instance.exports.add(1, 2));
+    console.log(instance.exports.timestamp());
+    /* 
+      ***途中、arrayBuffer欲しいとき***
+      const response = await fetch("./wasm_vanilla.wasm");
+      const bytes = await response.arrayBuffer();
+      const instance = await WebAssembly.instantiate(bytes, imports);
+
+      ***webviewでhost側で読み込む場合***  
+      const raw = await chrome.webview.hostObjects.Hoge.ReadAllBytes("./wasm_vanilla.wasm");
+      const bytes = new Uint8Array(raw);
+    */
+  </script>
+</body>
+</html>

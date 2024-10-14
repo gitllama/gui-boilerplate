@@ -1,0 +1,33 @@
+
+[package]
+name = "wasm_vanilla"
+version = "0.0.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+default = ["wasm_library/pdk"]
+sdk = ["wasmtime", "wasmtime-wasi", "wasm_library/sdk"]
+
+[[example]]
+name = "wasmtime"
+required-features = ["sdk"]
+
+[dependencies]
+wasm_library = { optional = true, path = "./wasm_library" }
+
+wasmtime = { optional=true, version="23.0.1"}
+wasmtime-wasi = { optional=true, version = "23.0.1", features = ["preview1"] }
+
+serde = "1.0.206"
+serde_json = "1.0.1"
+
+[workspace]
+members = [
+  ".",
+  "wasm_library"
+]

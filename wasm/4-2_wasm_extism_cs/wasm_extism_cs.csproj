@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Exe</OutputType>
+    <PublishTrimmed>true</PublishTrimmed>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Extism.Pdk" Version="1.0.3" />
+    <PackageReference Include="Extism.runtime.all" Version="1.4.1" />
+    <PackageReference Include="Extism.sdk" Version="1.2.1" />
+    <PackageReference Include="Microsoft.NET.Runtime.WebAssembly.Sdk" Version="8.0.7" />
+  </ItemGroup>
+</Project>

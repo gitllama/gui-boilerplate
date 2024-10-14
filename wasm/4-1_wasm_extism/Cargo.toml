@@ -1,0 +1,23 @@
+[package]
+name = "wasm_extism"
+version = "0.0.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[build]
+target = "wasm32-unknown-unknown"
+
+[[example]]
+name = "main"
+required-features = ["extism"]
+
+[dependencies]
+extism-pdk = "*"
+serde = "*"
+byteorder = "*"
+
+extism = { optional=true, version="1.4.1" }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+<body>
+  <div>Wasm Test</div>
+  <script type="module">
+
+    const module = await WebAssembly.compileStreaming(fetch('../target/wasm32-wasi/release/wasm_vanilla.wasm'));
+    const importObject = {
+      env: {
+      },
+      wasi_snapshot_preview1: {
+        fd_write: (i32a, i32b, i32c, i32d) => { 
+          switch (i32a) {
+            case 1:
+              console.log('標準出力')
+              console.log(i32b, i32c, i32d)
+// 引数2つ目: メモリの読み取り開始の位置
+// 引数3つ目: メモリの読み取り回数、2つ目の値が4バイトずつ加算される
+// 引数4つ目: 出力に書き込んだバイト数の保存先、メモリのインデックス値
+              break
+            case 2:
+              console.log('標準エラー出力')
+              break
+            default:
+              console.log('その他')
+          }
+          return 1;
+        },
+        environ_get: (i32a, i32b) => { return 0 },
+        environ_sizes_get: (i32a, i32b) => { return 0 },
+        proc_exit: (i32) => console.log(i32),
+      },
+    };
+
+    console.log(module);
+    const instance = await WebAssembly.instantiate(module, importObject);
+    instance.exports.run();
+  
+  </script>
+</body>
+</html>

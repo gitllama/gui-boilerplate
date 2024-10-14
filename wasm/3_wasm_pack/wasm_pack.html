@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">  
+  </head>
+<body>
+  <div>Wasm Test</div>
+  <script type="module">
+    import init, * as wasm from './wasm_pack/pkg/wasm_pack.js';
+    await init();
+    console.log(wasm.add(1,5));
+
+    const start = performance.now();
+    await wasm.sleep_millis(5);
+    const end = performance.now();
+    console.log(end - start);
+  
+  </script>
+</body>
+</html>

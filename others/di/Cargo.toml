@@ -1,0 +1,13 @@
+[package]
+name = "di"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.80"
+include_dir = "0.7.3"
+
+mockall = "0.12.1"
+fake = { version = "2.9.2", features = ["derive"] }

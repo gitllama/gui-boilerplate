@@ -1,0 +1,19 @@
+[package]
+name = "wasm_vanilla"
+version = "0.0.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[[example]]
+name = "wasmtime"
+required-features = ["wasmtime", "wasmtime-wasi"]
+
+[dependencies]
+wit-bindgen = "0.3"
+wasmtime = { optional=true, version="23.0.1" , features = ['component-model']}
+wasmtime-wasi = { optional=true, version = "23.0.1", features = ["preview1"] }
+
