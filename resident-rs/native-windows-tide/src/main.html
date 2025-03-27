@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="drop-zone" style="text-align:center; border: 1px solid; padding: 30px;">
+      <p>drag and drop</p>
+    </div>
+    <script>
+      var dropZone = document.getElementById('drop-zone');
+      dropZone.addEventListener('dragover', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this.style.background = '#e1e7f0';
+      }, false);
+      dropZone.addEventListener('dragleave', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this.style.background = '#ffffff';
+      }, false);
+      dropZone.addEventListener('drop', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this.style.background = '#ffffff'; //背景色を白に戻す
+        let json = JSON.stringify({ 'data' : e.dataTransfer.getData("text/plain") })
+        console.log(json)
+        fetch('http://localhost:3000/post', {
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: json
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log(data);
+        });
+        // external.invoke('drop');
+      }, false);
+    </script>
+  </body>
+</html>

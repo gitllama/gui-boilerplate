@@ -1,0 +1,53 @@
+[package]
+name = "winit-tray-icon"
+version = "0.0.1"
+edition = "2024"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+
+[dependencies]
+clap = { version = "4.5.32", features = ["derive"] }
+anyhow = { version = "1.0.97", features = ["std", "backtrace"] }
+thiserror = "2.0.12"
+
+indoc = "2"
+# num_enum = "*"
+strum = { version = "0.27.1", features = ["derive"] }
+strum_macros = "0.27.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono =  { version = "0.4", features = ["serde"] }
+
+# --------log--------
+env_logger = "0.5.3"
+log = "0.4"
+
+# --------resident--------
+winit = "0.30.9"
+winapi = { version="0.3.9", features=["consoleapi", "wincon", "winuser"] }
+tray-icon = "0.20.0"
+image = "0.25.5"
+webbrowser = "0.8"
+
+# --------process--------
+encoding_rs = "0.8.35"
+# encoding = "*"
+# encoding_rs_io = "*"
+
+# --------server--------
+tokio = { version = "1.44.0", features = ["full"] }
+# tokio-util = { version = "*", features = ["codec"] }
+# futures-util = "*"
+#   use tokio_util::codec::{FramedRead, BytesCodec};
+#   use futures_util::StreamExt;
+
+axum = "0.8.1"
+tower = "0.5.2"      # build middleware
+tower-http = { version = "0.6.2", features = ["full"] }
+# http-body-util = "0.1.0"
+# hyper-util = { version = "0.1", features = ["client", "http1", "client-legacy"] }
+# mime = "0.3"
+
+tera = { version = "1.20.0", default-features = false }

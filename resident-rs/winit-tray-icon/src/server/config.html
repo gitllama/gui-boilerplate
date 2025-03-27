@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+  </head>
+  <body>
+    <h1>{{title}}</h1>
+    <form id='myform'>
+      {% for key, val in items %}
+        {% if val.type == 'number' %}
+          <div>
+            <label>{{key}}</label>
+            <input type='number' name={{key}} value={{val.value}} />
+          </div>
+        {% elif val.type == 'string' %}
+          <div>
+            <label>{{key}}</label>
+            <input type='text' name={{key}} value={{val.value}} />
+          </div>
+        {% elif val.type == 'enum' %}
+          <div>
+          {% for member in val.members %}
+            <input type='radio' name={{key}} value={{member}} {% if val.kind == member %} checked {% endif %} >
+              <label for={{member}}>{{member}}</label>
+            </input>
+          {% endfor %}
+          </div>
+        {% else %}
+        {% endif %}
+      {% endfor %}
+    </form>
+    <button  onclick='submit(event)'>submit</button> 
+  </body>
+  <script>
+    const submit =(e) =>{
+      const form = document.forms['myform']
+      const formData = new FormData(form);
+      const val = Array.from(formData.entries()).map(([key, value]) => {
+        const input = form.elements[key];
+        console.log(key, input)
+        if (input instanceof RadioNodeList && input[0]?.type === "radio") {
+          return [key, { kind: value }];
+        }
+        return [key, value];
+      });
+      const json = Object.fromEntries(val);
+      console.log(json)
+    }
+  </script>
+</html>

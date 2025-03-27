@@ -1,0 +1,31 @@
+<html>
+  <body>
+    <h1>Hello, World!</h1>
+    <div id="count"></div>
+    <button type="button" onclick="onClickFunc1()">click_1</button>
+    <button type="button" onclick="onClickFunc2()">click_2</button>
+    <button type="button" onclick="onClickFunc3()">click_3</button>
+  </body>
+  <script>
+    const obj = {}
+    const onClickFunc1 = () =>{
+      window.ipc.postMessage(JSON.stringify({ kind : "count", data : 1 }))
+    };
+    const onClickFunc2 = () =>{
+      window.ipc.postMessage(JSON.stringify({ kind : "count", data : -1 }))
+    };
+    const onClickFunc3 = async () =>{
+      const response = await fetch("http://wry.localhost/", {
+        method: "POST",
+        body: JSON.stringify({ kind : "count", data : 2 }),
+      });
+      console.log(response);
+    };
+
+    window.addEventListener('customEvent', function(e) {
+      console.log('customEvent', e);
+      const elem = document.getElementById("count");
+      elem.textContent = e.detail.count;
+    }, false);
+  </script>
+</html>

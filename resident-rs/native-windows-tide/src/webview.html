@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="display">0</div>
+    <button onclick="external.invoke('count')">count</button>
+    <div id="drop_zone" ondrop="dropHandler(event);">
+      <p>Drag one or more files to this <i>drop zone</i>.</p>
+    </div>
+    <div id="drop-zone" style="border: 1px solid; padding: 30px;">
+        <p>ファイルをドラッグ＆ドロップもしくは</p>
+        <input type="file" name="file" id="file-input">
+    </div>
+    <script>
+      function update(count) {
+        document.getElementById('display').innerHTML = count;
+      };
+      function dropHandler(ev) {
+        ev.preventDefault();
+        external.invoke('drop');
+      }
+      var dropZone = document.getElementById('drop-zone');
+      dropZone.addEventListener('dragover', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this.style.background = '#e1e7f0';
+      }, false);
+      dropZone.addEventListener('dragleave', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this.style.background = '#ffffff';
+      }, false);
+      dropZone.addEventListener('drop', function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          this.style.background = '#ffffff'; //背景色を白に戻す
+          external.invoke('drop');
+      }, false);
+    </script>
+  </body>
+</html>

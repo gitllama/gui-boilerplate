@@ -13,5 +13,6 @@ name = "wasmtime"
 required-features = ["wasmtime"]
 
 [dependencies]
-wasmtime = { optional=true, version="23.0.1"}
+# wasmtime = { optional=true, version="23.0.1"}
+wasmtime = { optional=true, version="29.0.1"}
 

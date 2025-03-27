@@ -48,20 +48,24 @@
 
 ```ps1
 ps> rustup target list
-# wasm32-wasi : 標準ライブラリに統合したスタンドアロンバイナリ
+
 # wasm32-unknown-unknown : 標準ライブラリの想定無し(unknown)
+# wasm32-wasi : 標準ライブラリに統合したスタンドアロンバイナリ（旧ver）
+# wasm32-wasip1
+# wasm32-wasip2
 # wasm32-unknown-emscripten : ウェブブラウザ向け
 ps> rustup target add wasm32-unknown-unknown
-ps> rustup target add wasm32-wasi
+ps> rustup target add wasm32-wasip1
 
 ps> cargo build --target wasm32-unknown-unknown --release
-ps> cargo build --target wasm32-wasi --release
+ps> cargo build --target wasm32-wasip1 --release
 ```
 
 ### 内容
 
 importされるobjectの内容がwasm32-unknown-unknownに対してwasiはwasi_snapshot_preview1が追加される  
-追加がなければ```Import #0 module="wasi_snapshot_preview1" error```となる
+追加がなければ```Import #0 module="wasi_snapshot_preview1" error```となる  
+rustc v1.84.0以降 ~~wasm32-wasi~~ -> wasm32-wasip1 / wasm32-wasip2
 
 **wasm32-unknown-unknown**
 ```json
@@ -142,7 +146,7 @@ ps> cargo install wasm-pack
 ps> wasm-pack build --target web
 ```
 
--target
+- target
   - nodejs
   - bundler(webpack)
   - deno
@@ -272,28 +276,28 @@ console.log(sum);
 ```
                                                                                        
   ┌──────┐      ┌───────┐   ┌─────────┐   ┌───────────────────────────────────────┐    
-  │Device│      │Device │   │Operating│   │Application                            │    
-  │      │      │Driver │   │System   │   │ ┌───────────────────────┐   ┌───────┐ │    
-  │      │◄─────┤       │◄──┤         │◄──┤ │Rust                   │   │Vue.js │ │    
-  │      │      │       │   │         │   │ │                       │   │       │ │    
-  │      │      │       │   │         │   │ │ ┌────────┐                │       │ │    
-  │      ├─────►│       ├──►│         ├──►│ │ │decoder │◄───────────────┤       │ │    
-  │      │      │       │   │         │   │ │ │        │                │       │ │    
-  │      │      │       │   │         │   │ │ │        ├───────────────►│       │ │    
-  └──────┘      └───────┘   │         │   │ │ │        │                │       │ │    
-                            │         │   │ │ │        │    ┌─────┐     │       │ │    
-                ┌───────┐   │         │   │ │ │        ├───►│Pyo3 ├────►│       │ │    
-                │storage│◄──┤         │   │ │ │        │    │Wasm │     │       │ │    
-                │       │   │         │   │ │ │        │    │     │ │   │       │ │    
-                │       ├──►│         │   │ │ └────────┘    └─────┘ │   │       │ │    
-                │       │   │         │   │ │                       │   │       │ │    
-                │       │   │         │   │ └───────────────────────┘   └───────┘ │    
-                │       │   │         │   │                                       │    
-                └───────┘   └─────────┘   └───────────────────────────────────────┘    
+  │Device      │      │Device        │   │Operating         │   │Application                                                                   │    
+  │            │      │Driver        │   │System            │   │ ┌───────────────────────┐   ┌───────┐ │    
+  │            │ ◄──┤              │◄─┤                  │◄─┤ │Rust                                          │   │Vue.js │ │    
+  │            │      │              │   │                  │   │ │                       │   │       │ │    
+  │            │      │              │   │                  │   │ │ ┌────────┐                │       │ │    
+  │            ├──► │              ├─►│                  ├─►│ │ │decoder         │◄───────────────┤       │ │    
+  │            │      │              │   │                  │   │ │ │                │                │       │ │    
+  │            │      │              │   │                  │   │ │ │               ├───────────────►│       │ │    
+  └──────┘      └───────┘   │                  │   │ │ │               │                │       │ │    
+                                             │                  │   │ │ │               │    ┌─────┐     │       │ │    
+                      ┌───────┐     │                  │   │ │ │               ├───►│Pyo3 ├────►│       │ │    
+                      │storage       │◄──┤                  │   │ │ │               │    │Wasm │     │       │ │    
+                      │              │     │                  │   │ │ │               │    │     │ │   │       │ │    
+                      │              ├──►│                  │   │ │ └────────┘    └─────┘ │   │       │ │    
+                      │              │     │                  │   │ │                       │   │       │ │    
+                      │              │     │                  │   │ └───────────────────────┘   └───────┘ │    
+                      │              │     │                  │   │                                       │    
+                      └───────┘     └─────────┘   └───────────────────────────────────────┘    
                                                                                        
 ```
 
-## 98. reference
+## 99. reference
 
 [暗黙の型変換](https://wasm-dev-book.netlify.app/hello-wasm.html#%E6%9A%97%E9%BB%99%E3%81%AE%E5%9E%8B%E5%A4%89%E6%8F%9B)
 [linear-memory](https://rustwasm.github.io/docs/book/what-is-webassembly.html#linear-memory)

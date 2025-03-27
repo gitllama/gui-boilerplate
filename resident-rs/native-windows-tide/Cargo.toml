@@ -1,0 +1,32 @@
+[package]
+name = "native-windows-tide"
+version = "0.0.1"
+edition = "2021"
+
+# [[bin]]
+# name = "resident_warp"
+# path = "./src/resident_warp.rs"
+
+
+[dependencies]
+anyhow = "*"
+native-windows-gui = "*"
+native-windows-derive = "*"
+web-view = "*"
+once_cell = "*"
+
+# tokio = { version = "0.2", features = ["macros"] }
+# warp = "0.2"
+
+num-traits = "*"
+num-derive = "*"
+
+clap = {version = "4.0.18", features = ["derive", "env"]}
+env_logger = "=0.8.2"
+
+serde = { version ="1.0.104", features = ["derive"] } 
+
+# HTTP server
+tide = "0.16.0"
+async-std = { version = "1.9.0", features = ["attributes"] }
+async-process = "1.6.0"

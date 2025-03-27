@@ -1,5 +1,5 @@
 // cargo build --target wasm32-unknown-unknown --release
-// cargo build --target wasm32-wasi --release
+// cargo build --target wasm32-wasip1 --release
 
 /* 標準がenvなので、#[link(wasm_import_module = "env")]は省略可 */
 #[link(wasm_import_module = "env")]
